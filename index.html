@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz Cinta untuk Sinta 💖</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand&family=Pacifico&display=swap" rel="stylesheet">
+
+<style>
+body{font-family:'Quicksand',sans-serif}
+.font-romantic{font-family:'Pacifico',cursive}
+.fade-in{animation:fadeIn 1s ease forwards}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.secret{
+  font-size:2.5rem;
+  color:#ff4d88;
+  margin-top:20px;
+  animation:fadeIn 2s ease forwards;
+}
+</style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center bg-pink-50">
+
+<!-- ❤️ AUDIO -->
+<audio id="loveMusic" preload="auto">
+  <source src="SaveTik.co_7471826609843096840.mp3" type="audio/mpeg">
+</audio>
+
+<div class="w-full max-w-xl text-center p-6">
+
+<!-- START -->
+<div id="start-screen">
+  <h1 class="font-romantic text-5xl text-pink-500 mb-4">Quiz Cinta untuk Sinta 💖</h1>
+  <p class="text-pink-400 mb-6">Ini kecil… tapi rasanya tulus 🤍</p>
+  <button onclick="startQuiz()"
+    class="px-8 py-3 bg-pink-400 text-white rounded-full text-lg">
+    Mulai ya Cantik 💕
+  </button>
+</div>
+
+<!-- QUIZ -->
+<div id="quiz-screen" class="hidden">
+  <h2 id="question-text" class="text-2xl text-pink-500 mb-4"></h2>
+  <div id="answers-container" class="space-y-3"></div>
+</div>
+
+<!-- RESULT -->
+<div id="result-screen" class="hidden fade-in">
+  <h2 class="font-romantic text-4xl text-pink-500 mb-3">
+    Hasil Cinta Sinta 💘
+  </h2>
+
+  <div id="score-display" class="text-4xl text-pink-400 mb-4"></div>
+
+  <!-- TOMBOL RAHASIA -->
+  <button onclick="revealLove()"
+    class="px-8 py-3 bg-pink-400 text-white rounded-full text-lg">
+    💖 Buka Pesan Rahasia 💖
+  </button>
+
+  <!-- PESAN RAHASIA -->
+  <div id="secret-message" class="secret hidden">
+    💖 I LOVE YOU 💖
+  </div>
+
+  <p class="text-pink-300 mt-4 italic">
+    “Kalau cinta itu pilihan… aku selalu milih kamu.”
+  </p>
+</div>
+
+</div>
+
+<script>
+const quizQuestions = Array(15).fill({
+  question:"Sinta, kamu tau nggak?",
+  answers:[
+    {text:"Aku sayang kamu 💕",score:3},
+    {text:"Aku nyaman sama kamu 🤍",score:3},
+    {text:"Aku mau sama kamu 😳",score:3},
+    {text:"Semua tentang kamu 💖",score:3}
+  ]
+});
+
+let current=0, score=0;
+
+function startQuiz(){
+ document.getElementById('start-screen').classList.add('hidden');
+ document.getElementById('quiz-screen').classList.remove('hidden');
+ loadQuestion();
+}
+
+function loadQuestion(){
+ const q=quizQuestions[current];
+ document.getElementById('question-text').textContent =
+  `(${current+1}/15) ` + q.question;
+
+ const c=document.getElementById('answers-container');
+ c.innerHTML='';
+ q.answers.forEach(a=>{
+  const b=document.createElement('button');
+  b.className='w-full p-3 rounded bg-pink-200';
+  b.innerText=a.text;
+  b.onclick=()=>selectAnswer(a.score);
+  c.appendChild(b);
+ });
+}
+
+function selectAnswer(s){
+ score+=s;
+ current++;
+ current<15 ? loadQuestion() : showResult();
+}
+
+function showResult(){
+ document.getElementById('quiz-screen').classList.add('hidden');
+ document.getElementById('result-screen').classList.remove('hidden');
+ document.getElementById('score-display').textContent =
+   score + ' / 45';
+}
+
+// DIPICU KLIK (AMAN DI HP)
+function revealLove(){
+ document.getElementById('loveMusic').play();
+ document.getElementById('secret-message').classList.remove('hidden');
+}
+</script>
+
+</body>
+</html>
